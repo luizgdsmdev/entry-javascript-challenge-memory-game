@@ -12,6 +12,8 @@ const state = {
         squarePairs: {},
         flipController: [],
         squareIdController: [],
+        usedIDs: [],
+        lastIdVisited: [],
     },
     actions:{
 
@@ -95,6 +97,10 @@ let matchpairs = () =>{
 
     
     if(verifyEmoji && (rightCard_0 !== rightCard_1)){
+        state.values.usedIDs.push(rightCard_0.id, rightCard_1.id);
+
+
+        console.log(state.values.usedIDs)
         rightCard_0.classList.add("right-pair");
         rightCard_1.classList.add("right-pair");
         rightCard_0.parentElement.classList.add("right-card-verse");
@@ -123,18 +129,26 @@ let clearWrongPairClasses = () =>{
 state.view.htmlElements.squares__squareElement.forEach(squareHtmlElement => {
     squareHtmlElement.addEventListener("click", (event) =>{
         event.stopImmediatePropagation();
+        
+        //Validate if the card pair was not found (to block click on those already found)
+        let blockClickOnFoundPairs = state.values.usedIDs.includes(squareHtmlElement.querySelectorAll(".card-back")[0].id)
+        
+        //to avoid double click on the same card
+        let lastIdVisited = squareHtmlElement.querySelectorAll(".card-back")[0].id === state.values.lastIdVisited[0];
+        state.values.lastIdVisited.pop();
+
+        if(!blockClickOnFoundPairs && !lastIdVisited){
         clearWrongPairClasses();
 
         //Send the element ID for flip control, max of 2 cards per time (except when their the same emoji)
         flipController(squareHtmlElement);
-        
         toggleTurnSquareClass(squareHtmlElement);
+            
+        }
+
+        state.values.lastIdVisited.push(squareHtmlElement.querySelectorAll(".card-back")[0].id)
+
     });
-});
-
-
-state.view.emojis.map((emojiElement) => {
-    
 });
 
 

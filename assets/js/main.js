@@ -40,7 +40,20 @@ let randomPositionGen = (htmlElement) =>{
 } 
 
 //Map random postiions to emoji
-let mapEmojiPostion = () => {
+let emojiInsertionOnDOM = () => {
+    //Calling in here to make sure the position generation occurs
+    randomPositionGen();
+
+    let emojiPairPosition = Object.entries(state.values.squarePairs);
+
+    //Add the emoji pair to the DOM
+    for(let [emoji, pairPosition] of emojiPairPosition){
+        let position__0 = document.getElementById(pairPosition[0]);
+        let position__1 = document.getElementById(pairPosition[1]);
+
+        position__0.innerHTML = `<p>${emoji}</p>`;
+        position__1.innerHTML = `<p>${emoji}</p>`;
+    }
 
 } 
 
@@ -73,7 +86,7 @@ state.view.emojis.map((emojiElement) => {
 
 
 let main = () =>{
-    randomPositionGen();
+    emojiInsertionOnDOM();
 }
 
 main();

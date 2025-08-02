@@ -84,12 +84,12 @@ body{
     transition: 0.6s ease-in-out;
 }
 
-.card-front:hover{
+.card-front:hover, .card-back:hover{
     background-color: #212155;
 }
 
 .card-back {
-    background-color: #e74c3c;
+    background-color: #050525;
     color: white;
     transform: rotateY(180deg);
     transition: 0.6s ease-in-out;
@@ -101,4 +101,12 @@ body{
 
 .card-wrapper.show-card-verse .card-back {
     transform: rotateY(0deg);
+}
+
+.squares__square-element p{
+    font-size: 3rem;
+}
+
+.squares__square-element-back p{
+    font-size: 9rem;
 }

@@ -1,14 +1,16 @@
 const state = {
     view:{
-        emojis: ["🪭", "👑", "🩰", "💼", "☂️", "💍"],
+        emojis: ["🪭", "🤖", "🩰", "💼", "☂️", "💍"],
         htmlElements:{
             squares__squareElement: document.querySelectorAll(".card-wrapper"),
+            squares__squareElementFliped: document.querySelectorAll(".show-card-verse"),
         }
 
     },
     values:{
         sortedEmojiPosition: [],
         squarePairs: {},
+        flipController: []
     },
     actions:{
 
@@ -55,7 +57,26 @@ let emojiInsertionOnDOM = () => {
         position__1.innerHTML = `<p>${emoji}</p>`;
     }
 
-} 
+}
+
+let controllerForFlip = 0;
+let flipController = (htmlElement) => {
+    let backCardViewID = htmlElement.querySelector(".card-back").id;
+
+    //Verify if there are 2 cards already flipped
+    if(controllerForFlip < 2){
+        state.values.flipController.push(backCardViewID);
+        controllerForFlip += 1;
+    }else{
+        //Runs only for cards already flipped and reverse the state to normal
+        document.querySelectorAll(".show-card-verse").forEach(squareHtmlElement => {
+            squareHtmlElement.classList.toggle("show-card-verse");
+            state.values.flipController.splice(0, state.values.flipController.length)
+            controllerForFlip = 1;
+        });
+    }
+    
+}
 
 
 
@@ -73,9 +94,9 @@ let emojiInsertionOnDOM = () => {
 state.view.htmlElements.squares__squareElement.forEach(squareHtmlElement => {
     squareHtmlElement.addEventListener("click", (event) =>{
         event.stopImmediatePropagation();
+        flipController(squareHtmlElement);//Send the element ID for flip control, max of 2 cards per time (except when their the same emoji)
 
         toggleTurnSquareClass(squareHtmlElement);
-        randomEmojiInsertion(squareHtmlElement);
     });
 });
 

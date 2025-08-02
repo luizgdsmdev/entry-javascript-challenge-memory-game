@@ -111,3 +111,16 @@ body{
 .card-back.wrong-pair{
     border: 1.5px solid #ff0000;
 }
+
+.card-back.right-pair{
+    border: 1.5px solid #0eac0e;
+    background-color: #086408;
+}
+ 
+.card-wrapper.right-card-verse .card-back{
+    transform: rotateY(0deg)!important;
+    position: relative; 
+    width: 15rem;
+    height: 15rem;
+    border-radius: 1rem;
+}

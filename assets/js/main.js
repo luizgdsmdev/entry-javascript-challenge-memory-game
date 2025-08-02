@@ -85,21 +85,29 @@ let flipController = (htmlElement) => {
     //Check if there are two cards flipped and call for match verification
     controllerForFlip === 2 ? matchpairs() : "";
     
-}
+} 
 
 //Check and apply different classes for matching pairs
 let matchpairs = () =>{
-    if(state.values.emojiController[0] === state.values.emojiController[1]){
-        //console.log("same same");
+    let rightCard_0 = document.getElementById(state.values.squareIdController[0]);
+    let rightCard_1 = document.getElementById(state.values.squareIdController[1]);
+    let verifyEmoji = state.values.emojiController[0] === state.values.emojiController[1];
+
+    
+    if(verifyEmoji && (rightCard_0 !== rightCard_1)){
+        rightCard_0.classList.add("right-pair");
+        rightCard_1.classList.add("right-pair");
+        rightCard_0.parentElement.classList.add("right-card-verse");
+        rightCard_1.parentElement.classList.add("right-card-verse");
+
     }else{
-        
-        //console.log("but diiiifferent");
         state.values.squareIdController.forEach(CardBackID => {
             let htmlCard = document.getElementById(CardBackID);
             htmlCard.classList.add("wrong-pair");
         });
     }
 
+    state.values.squareIdController.splice(0, state.values.squareIdController.length);
     state.values.emojiController.splice(0, state.values.emojiController.length);
 }
 

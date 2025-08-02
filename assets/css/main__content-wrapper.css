@@ -4,6 +4,7 @@ body{
     height: 120dvh;
     overflow-y: scroll;
 }
+
 .main__content-wrapper{
     width: 100%;
     height: 100%;
@@ -26,37 +27,6 @@ body{
     margin-top: 1.5rem;
 }
 
-.content__squares-wrapper{
-    padding: 1rem;
-    margin: 1rem;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.squares__square-element{
-    background-color: #15163d;
-    min-width: 15rem;
-    min-height: 15rem;
-    font-size: 2rem;
-    color: white;
-    align-content: center;
-    place-items: center;
-    border-radius: 1rem;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-}
-
-.squares__square-element:hover{
-    background-color: #1e1f4f;
-}
-
-
-
 .board__button{
     font-size: 1.5rem;
     font-weight: 600;
@@ -69,4 +39,65 @@ body{
     text-align: center;
     text-transform: uppercase;
     cursor: pointer;
+}
+
+.content__squares-container {
+    padding: 1rem;
+    margin: 1rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    perspective: 1000px;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.card-wrapper {
+    position: relative; 
+    width: 15rem;
+    height: 15rem;
+    border-radius: 1rem;
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+.card-front {
+    background-color: #15163d;
+    color: white;
+    transform: rotateY(0deg);
+    transition: 0.3s ease-in-out;
+}
+
+.card-front:hover{
+    background-color: #212155;
+}
+
+.card-back {
+    background-color: #e74c3c;
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.card-wrapper.show-card-verse .card-front {
+    transform: rotateY(180deg);
+}
+
+.card-wrapper.show-card-verse .card-back {
+    transform: rotateY(0deg);
 }

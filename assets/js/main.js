@@ -8,7 +8,7 @@ const state = {
 
     },
     values:{
-        sortedEmojiPosition: [],
+        emojiController: [],
         squarePairs: {},
         flipController: []
     },
@@ -53,29 +53,45 @@ let emojiInsertionOnDOM = () => {
         let position__0 = document.getElementById(pairPosition[0]);
         let position__1 = document.getElementById(pairPosition[1]);
 
-        position__0.innerHTML = `<p>${emoji}</p>`;
-        position__1.innerHTML = `<p>${emoji}</p>`;
+        position__0.innerHTML = `${emoji}`;
+        position__1.innerHTML = `${emoji}`;
     }
 
 }
 
+//"Logic for card flip counting, keeping only max of two cards flipped at time
 let controllerForFlip = 0;
 let flipController = (htmlElement) => {
-    let backCardViewID = htmlElement.querySelector(".card-back").id;
 
-    //Verify if there are 2 cards already flipped
-    if(controllerForFlip < 2){
-        state.values.flipController.push(backCardViewID);
-        controllerForFlip += 1;
-    }else{
-        //Runs only for cards already flipped and reverse the state to normal
+    //Runs only for cards already flipped and reverse the state to normal
+    let reverseFlippedCards = () =>{
         document.querySelectorAll(".show-card-verse").forEach(squareHtmlElement => {
             squareHtmlElement.classList.toggle("show-card-verse");
             state.values.flipController.splice(0, state.values.flipController.length)
             controllerForFlip = 1;
         });
     }
-    
+
+    //Verify if there are 2 cards already flipped
+    controllerForFlip < 2 ? controllerForFlip += 1 : reverseFlippedCards();
+
+    //Adding the emoji for validation of pair
+    state.values.emojiController.push(htmlElement.querySelector(".card-back").innerHTML);
+
+    //Check if there are two cards flipped and call for match verification
+    controllerForFlip === 2 ? matchpairs() : "";
+}
+
+//Check and apply different classes for matching pairs
+let matchpairs = () =>{
+    console.log(state.values.emojiController)
+    if(state.values.emojiController[0] === state.values.emojiController[1]){
+        console.log("same same");
+    }else{
+        console.log("but diiiifferent");
+    }
+
+    state.values.emojiController.splice(0, state.values.emojiController.length);
 }
 
 

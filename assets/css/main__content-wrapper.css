@@ -93,6 +93,7 @@ body{
     color: white;
     transform: rotateY(180deg);
     transition: 0.6s ease-in-out;
+    font-size: 9rem;
 }
 
 .card-wrapper.show-card-verse .card-front {
@@ -105,8 +106,4 @@ body{
 
 .squares__square-element p{
     font-size: 3rem;
-}
-
-.squares__square-element-back p{
-    font-size: 9rem;
 }

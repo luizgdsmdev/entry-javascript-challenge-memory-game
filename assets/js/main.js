@@ -10,7 +10,8 @@ const state = {
     values:{
         emojiController: [],
         squarePairs: {},
-        flipController: []
+        flipController: [],
+        squareIdController: [],
     },
     actions:{
 
@@ -63,6 +64,9 @@ let emojiInsertionOnDOM = () => {
 let controllerForFlip = 0;
 let flipController = (htmlElement) => {
 
+    //Add the id of HTML element for frontEnd class control
+    state.values.squareIdController.push(htmlElement.querySelectorAll(".card-back")[0].id);
+
     //Runs only for cards already flipped and reverse the state to normal
     let reverseFlippedCards = () =>{
         document.querySelectorAll(".show-card-verse").forEach(squareHtmlElement => {
@@ -80,38 +84,42 @@ let flipController = (htmlElement) => {
 
     //Check if there are two cards flipped and call for match verification
     controllerForFlip === 2 ? matchpairs() : "";
+    
 }
 
 //Check and apply different classes for matching pairs
 let matchpairs = () =>{
-    console.log(state.values.emojiController)
     if(state.values.emojiController[0] === state.values.emojiController[1]){
-        console.log("same same");
+        //console.log("same same");
     }else{
-        console.log("but diiiifferent");
+        
+        //console.log("but diiiifferent");
+        state.values.squareIdController.forEach(CardBackID => {
+            let htmlCard = document.getElementById(CardBackID);
+            htmlCard.classList.add("wrong-pair");
+        });
     }
 
     state.values.emojiController.splice(0, state.values.emojiController.length);
 }
 
 
-
-
-
-
-
-
-
-
-
+//Clear all wrong pair classes that could be at the HTML before validation
+let clearWrongPairClasses = () =>{
+    let wrongPairHtmlList = document.querySelectorAll(".wrong-pair");
+    wrongPairHtmlList.forEach(htmlCard => {htmlCard.classList.remove("wrong-pair"); });
+}
 
 
 //Retrieve the HTML elements from DOM and ad the click actions
 state.view.htmlElements.squares__squareElement.forEach(squareHtmlElement => {
     squareHtmlElement.addEventListener("click", (event) =>{
         event.stopImmediatePropagation();
-        flipController(squareHtmlElement);//Send the element ID for flip control, max of 2 cards per time (except when their the same emoji)
+        clearWrongPairClasses();
 
+        //Send the element ID for flip control, max of 2 cards per time (except when their the same emoji)
+        flipController(squareHtmlElement);
+        
         toggleTurnSquareClass(squareHtmlElement);
     });
 });

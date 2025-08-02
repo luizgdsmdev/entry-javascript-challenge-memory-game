@@ -107,3 +107,7 @@ body{
 .squares__square-element p{
     font-size: 3rem;
 }
+
+.card-back.wrong-pair{
+    border: 1.5px solid #ff0000;
+}

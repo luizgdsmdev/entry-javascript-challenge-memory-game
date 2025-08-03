@@ -99,12 +99,16 @@ let matchpairs = () =>{
     if(verifyEmoji && (rightCard_0 !== rightCard_1)){
         state.values.usedIDs.push(rightCard_0.id, rightCard_1.id);
 
-
-        console.log(state.values.usedIDs)
+        //CSS for visual feedback 
         rightCard_0.classList.add("right-pair");
         rightCard_1.classList.add("right-pair");
         rightCard_0.parentElement.classList.add("right-card-verse");
         rightCard_1.parentElement.classList.add("right-card-verse");
+
+        //Adding the animation to make the right pairs
+        rightCard_0.parentElement.classList.add("right-pair-disappear");
+        rightCard_1.parentElement.classList.add("right-pair-disappear");
+        
 
     }else{
         state.values.squareIdController.forEach(CardBackID => {

@@ -156,3 +156,23 @@ body{
         display: none;
     }
 }
+
+
+.content__squares-final_screen{
+    width: 100%;
+    height: 100%;
+    text-align: -webkit-center;
+    text-align: center;
+    margin: 2rem 0.5rem;
+    color: #ffffff;
+    display: none;
+}
+
+.content__squares-final_screen h4{
+    font-size: 2rem;
+    padding: 1.5rem;
+}
+.content__squares-final_screen p{
+    font-size: 1.2rem;
+    padding: 1rem;
+}

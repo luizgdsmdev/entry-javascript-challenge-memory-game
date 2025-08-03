@@ -14,6 +14,9 @@ const state = {
         squareIdController: [],
         usedIDs: [],
         lastIdVisited: [],
+        movesController: null,
+        gameWinController: null,
+        initialTime: new Date(),
     },
     actions:{
 
@@ -109,6 +112,12 @@ let matchpairs = () =>{
         rightCard_0.parentElement.classList.add("right-pair-disappear");
         rightCard_1.parentElement.classList.add("right-pair-disappear");
         
+        state.values.gameWinController += 1;
+        state.values.gameWinController === 6 ? userWonGame() : "";
+
+        console.log(`Matching pairs: ${state.values.gameWinController}`)
+        console.log(state.values.gameWinController === 6)
+        
 
     }else{
         state.values.squareIdController.forEach(CardBackID => {
@@ -129,10 +138,43 @@ let clearWrongPairClasses = () =>{
 }
 
 
+//Controlls the frontend for when the user wins the game
+let userWonGame = () =>{
+    let content__squaresFinal_screen = document.getElementById("content__squares-final_screen");
+    let squares__final_screenTime = document.getElementById("squares__final_screen-time");
+    let squares__final_screenMoves = document.getElementById("squares__final_screen-moves");
+
+    
+
+    squares__final_screenTime.innerText = `Total time: ${timeHandler()}`;
+    squares__final_screenMoves.innerText = `Total moves: ${state.values.movesController}`
+    
+    //Controls 3s for enough time on frontend animation to occur before shows final score
+    setTimeout(() => {
+       content__squaresFinal_screen.style.display = "block"; 
+    }, 3000);
+}
+
+//Handles game time for final screen
+let timeHandler = () =>{
+    let finalTime = new Date();
+    totalTime = (finalTime - state.values.initialTime)/1000;
+
+    let minutes = Math.floor(totalTime / 60);
+    let seconds = totalTime % 60;
+
+    let minutesF = String(minutes).padStart(2, '0');
+    let secondsF = String(Math.floor(seconds)).padStart(2, '0');
+
+    return `${minutesF}:${secondsF}`;
+}
+
+
 //Retrieve the HTML elements from DOM and ad the click actions
 state.view.htmlElements.squares__squareElement.forEach(squareHtmlElement => {
     squareHtmlElement.addEventListener("click", (event) =>{
         event.stopImmediatePropagation();
+        state.values.movesController += 1;
         
         //Validate if the card pair was not found (to block click on those already found)
         let blockClickOnFoundPairs = state.values.usedIDs.includes(squareHtmlElement.querySelectorAll(".card-back")[0].id)

@@ -102,6 +102,7 @@ let matchpairs = () =>{
     if(verifyEmoji && (rightCard_0 !== rightCard_1)){
         state.values.usedIDs.push(rightCard_0.id, rightCard_1.id);
 
+        soundHandler("right-pair.mp3", 0.5, 0.1);
         //CSS for visual feedback 
         rightCard_0.classList.add("right-pair");
         rightCard_1.classList.add("right-pair");
@@ -111,16 +112,16 @@ let matchpairs = () =>{
         //Adding the animation to make the right pairs
         rightCard_0.parentElement.classList.add("right-pair-disappear");
         rightCard_1.parentElement.classList.add("right-pair-disappear");
+        setTimeout(() => {
+            soundHandler("dissolve-pair.mp3", 0.2, 0.1);
+        }, 2800);
         
         state.values.gameWinController += 1;
         state.values.gameWinController === 6 ? userWonGame() : "";
-
-        console.log(`Matching pairs: ${state.values.gameWinController}`)
-        console.log(state.values.gameWinController === 6)
         
-
     }else{
         state.values.squareIdController.forEach(CardBackID => {
+            soundHandler("wrong-pair.mp3", 0.2, 0.1);
             let htmlCard = document.getElementById(CardBackID);
             htmlCard.classList.add("wrong-pair");
         });
@@ -140,18 +141,18 @@ let clearWrongPairClasses = () =>{
 
 //Controlls the frontend for when the user wins the game
 let userWonGame = () =>{
+    
     let content__squaresFinal_screen = document.getElementById("content__squares-final_screen");
     let squares__final_screenTime = document.getElementById("squares__final_screen-time");
     let squares__final_screenMoves = document.getElementById("squares__final_screen-moves");
 
-    
-
-    squares__final_screenTime.innerText = `Total time: ${timeHandler()}`;
-    squares__final_screenMoves.innerText = `Total moves: ${state.values.movesController}`
+    squares__final_screenTime.innerText = `Time: ${timeHandler()}`;
+    squares__final_screenMoves.innerText = `Moves: ${state.values.movesController}`
     
     //Controls 3s for enough time on frontend animation to occur before shows final score
     setTimeout(() => {
-       content__squaresFinal_screen.style.display = "block"; 
+        soundHandler("user-won.mp3", 0.6, 0.1);
+        content__squaresFinal_screen.style.display = "block"; 
     }, 3000);
 }
 
@@ -167,6 +168,14 @@ let timeHandler = () =>{
     let secondsF = String(Math.floor(seconds)).padStart(2, '0');
 
     return `${minutesF}:${secondsF}`;
+}
+
+//Sound play handler
+let soundHandler = (soundName, volume, currentTime) => {
+    let sound = new Audio(`./assets/sounds/${soundName}`);
+    sound.volume = volume;
+    sound.currentTime = currentTime;
+    sound.play();
 }
 
 
@@ -202,6 +211,6 @@ let main = () =>{
     emojiInsertionOnDOM();
 }
 
-main();
 
-//console.log(state.values.positionTaken.slice(-1,1))
+
+main();
